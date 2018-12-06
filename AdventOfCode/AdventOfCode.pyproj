@@ -5,7 +5,7 @@
     <ProjectGuid>b56c4e9c-8486-4851-98b9-3cf59c03bc24</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>day1.py</StartupFile>
+    <StartupFile>day4.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,7 +25,9 @@
     <Compile Include="day1.py" />
     <Compile Include="day2.py" />
     <Compile Include="day3.py" />
-    <Compile Include="day4.py" />
+    <Compile Include="day4.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
