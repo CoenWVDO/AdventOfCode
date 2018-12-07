@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Day5.h"
 #include "Day6.h"
+#include "Day7.h"
 
 int main()
 {
@@ -12,9 +13,14 @@ int main()
 	//day5.perform();
 	//day5.performPart2();
 	
-	Day6 day6("day6data.txt");
+	//Day6 day6("day6data.txt");
 	//day6.perform();
-	day6.performPart2();
+	//day6.performPart2();
+
+	Day7 day7("day7data.txt");
+	//day7.perform();
+	day7.performPart2();
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
