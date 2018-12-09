@@ -89,27 +89,22 @@ for day in workingDayList:
     if guardFound == False:
         guardlist.append(Guard(day.id, daySleepTime))
 
-lazyGuard = Guard("#0", 0)
-
-for guard in guardlist:
-    if guard.totalSleepTime > lazyGuard.totalSleepTime:
-        lazyGuard = guard
-
-sleepHours = []
-for i in range(60):
-    sleepHours.append(0)
-
-for day in workingDayList:
-    if day.id == lazyGuard.id:
-        for i in range(60):
-            if day.timeLine[i] == '#':
-                sleepHours[i] += 1
+highestId = ""
 highestHour = 0
 highestHourIndex = 0
-
-for i in range(60):
-    if sleepHours[i] > highestHour:
-        highestHour = sleepHours[i]
-        highestHourIndex = i
-print lazyGuard.id + "  X  " + str(highestHourIndex) + "  =  " + \
-    str(highestHourIndex*int(lazyGuard.id.split('#')[1]))
+for guard in guardlist:
+    sleepHours = []
+    for i in range(60):
+        sleepHours.append(0)
+    for day in workingDayList:
+        if day.id == guard.id:
+            for i in range(60):
+                if day.timeLine[i] == '#':
+                    sleepHours[i] += 1
+    for i in range(60):
+        if sleepHours[i] > highestHour:
+            highestHour = sleepHours[i]
+            highestHourIndex = i
+            highestId = guard.id
+print highestId + "  X  " + str(highestHourIndex) + "  =  " + \
+    str(highestHourIndex*int(highestId.split('#')[1]))
