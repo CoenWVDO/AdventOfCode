@@ -142,6 +142,7 @@ void Day7::performPart2()
 			if (w->isBusy())
 			{
 				allfinished = false;
+				break;
 			}
 		}
 

@@ -6,10 +6,11 @@
 #include "Day5.h"
 #include "Day6.h"
 #include "Day7.h"
+#include "Day8.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-	//Day5 day5("day5data.txt");
+	//Day5 day5("day5coen.txt");
 	//day5.perform();
 	//day5.performPart2();
 	
@@ -17,9 +18,13 @@ int main()
 	//day6.perform();
 	//day6.performPart2();
 
-	Day7 day7("day7data.txt");
+	//Day7 day7("day7data.txt");
 	//day7.perform();
-	day7.performPart2();
+	//day7.performPart2();
+
+	Day8 day8("day8data.txt");
+	//day8.calcSum();
+	day8.part2();
 
 }
 
