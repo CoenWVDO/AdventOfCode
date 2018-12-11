@@ -7,6 +7,8 @@
 #include "Day6.h"
 #include "Day7.h"
 #include "Day8.h"
+#include "Day9.h"
+#include "Day9Performance.h"
 
 int main(int argc, char* argv[])
 {
@@ -22,9 +24,16 @@ int main(int argc, char* argv[])
 	//day7.perform();
 	//day7.performPart2();
 
-	Day8 day8("day8data.txt");
+	//Day8 day8("day8data.txt");
 	//day8.calcSum();
-	day8.part2();
+	//day8.part2();
+	// Day9 day9;
+	// day9.winnerPoints();
+	// day9.part2(404, 7185200);
+
+	 Day9Performance day9improved;
+	 long long answer2 = day9improved.calculateWinnerPoints(404, 7185200);
+	 std::cout << answer2 << std::endl;
 
 }
 
