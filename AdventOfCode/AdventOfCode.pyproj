@@ -5,7 +5,7 @@
     <ProjectGuid>b56c4e9c-8486-4851-98b9-3cf59c03bc24</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>day11.py</StartupFile>
+    <StartupFile>day13.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,12 @@
   <ItemGroup>
     <Compile Include="day1.py" />
     <Compile Include="day11.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="day12.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="day13.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="day2.py" />
