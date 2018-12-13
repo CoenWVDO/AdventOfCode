@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
 	//day6.perform();
 	//day6.performPart2();
 
-	//Day7 day7("day7data.txt");
+	Day7 day7("input.txt");
 	//day7.perform();
-	//day7.performPart2();
+	day7.performPart2();
 
 	//Day8 day8("day8data.txt");
 	//day8.calcSum();
@@ -37,8 +37,8 @@ int main(int argc, char* argv[])
 	 //long long answer2 = day9improved.calculateWinnerPoints(404, 7185200);
 	 //std::cout << answer2 << std::endl;
 
-	Day10 day10("day10data.txt");
-	day10.findMessage(10390, 10440);
+	//Day10 day10("day10data.txt");
+	//day10.findMessage(10390, 10440);
 
 }
 
