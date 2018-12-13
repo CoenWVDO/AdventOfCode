@@ -151,19 +151,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Day10.h" />
     <ClInclude Include="Day5.h" />
     <ClInclude Include="Day6.h" />
     <ClInclude Include="Day7.h" />
     <ClInclude Include="Day8.h" />
+    <ClInclude Include="Day9.h" />
+    <ClInclude Include="Day9Performance.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Worker.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Day10.cpp" />
     <ClCompile Include="Day5.cpp" />
     <ClCompile Include="AdventOfCodeCpp.cpp" />
     <ClCompile Include="Day6.cpp" />
     <ClCompile Include="Day7.cpp" />
     <ClCompile Include="Day8.cpp" />
+    <ClCompile Include="Day9.cpp" />
+    <ClCompile Include="Day9Performance.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

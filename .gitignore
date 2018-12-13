@@ -10,6 +10,7 @@
 *.log
 *.db
 *.suo
+*.sln
 AdventOfCodeCpp/AdventOfCodeCpp.vcxproj.user
 AdventOfCodeCpp/AdventOfCodeCpp.vcxproj.filters
 .vs/AdventOfCode/v15/ipch/7cfd3f046890ad13.ipch
