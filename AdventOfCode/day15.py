@@ -89,27 +89,6 @@ for line in data:
             field.spaces[x][y].setFighter(figh)
             elvesAlive+=1
 
-"""
-adjacencyMap = {(0,0):[(0,0),],}
-
-#Dijkstra, construction adjacency map for the first time:
-#key should be [x,y], values should be [[x,y],[x,y],etc]
-for i in range(0, field.xSize):
-    for j in range(0, field.ySize):
-        spa = field.spaces[i][j]
-        if spa.entity == 0:
-            adjacencyMap[(i,j)] = []
-            if field.spaces[i][j-1].entity == 0:
-                adjacencyMap[(i,j)].append((i,j-1))
-            if field.spaces[i+1][j].entity == 0:
-                adjacencyMap[(i,j)].append((i+1,j))
-            if field.spaces[i-1][j].entity == 0:
-                adjacencyMap[(i,j)].append((i-1,j))
-            if field.spaces[i][j+1].entity == 0:
-                adjacencyMap[(i,j)].append((i,j+1))
-
-adjacencyMap.pop((0,0))
-"""
 
 def dijkstra(start):
     distanceDict = {}
@@ -144,6 +123,15 @@ def dijkstra(start):
                     workSet[neighbour] = distance+1
                     distanceDict[neighbour][1:] = distanceDict[coord][1:]
                     distanceDict[neighbour].append(neighbour)
+                elif distance + 1 == distanceDict[neighbour][0]:
+                    newfirstStep = distanceDict[coord][1]
+                    prevfirstStep = distanceDict[neighbour][1]
+                    if ((newfirstStep[1] < prevfirstStep[1]) or ((newfirstStep[1] == prevfirstStep[1]) and (newfirstStep[0] < prevfirstStep[0]))):
+                        distanceDict[neighbour][0] = distance + 1
+                        workSet[neighbour] = distance+1
+                        distanceDict[neighbour][1:] = distanceDict[coord][1:]
+                        distanceDict[neighbour].append(neighbour)
+
         else:
             for neighbour in neighbours:
                 if distance + 1 < distanceDict[neighbour][0]:
@@ -159,139 +147,10 @@ distance = 10000
 route = []
 allDead = False
 
-"""
-def fighterdied(i, j):
-    return
-    field.spaces[i][j].entity = 0
-    adjacencyMap[(i,j)] = []
-    if (i+1,j) in adjacencyMap:
-        adjacencyMap[(i+1,j)].append((i,j))
-    elif field.spaces[i+1][j].entity == 0:
-        adjacencyMap[(i+1,j)] = [(i,j),]
-    if (i-1,j) in adjacencyMap:
-        adjacencyMap[(i-1,j)].append((i,j))
-    elif field.spaces[i-1][j].entity == 0:
-        adjacencyMap[(i-1,j)] = [(i,j),]
-    if (i,j+1) in adjacencyMap:
-        adjacencyMap[(i,j+1)].append((i,j))
-    elif field.spaces[i][j+1].entity == 0:
-        adjacencyMap[(i,j+1)] = [(i,j),]
-    if (i,j-1) in adjacencyMap:
-        adjacencyMap[(i,j-1)].append((i,j))
-    elif field.spaces[i][j-1].entity == 0:
-        adjacencyMap[(i,j-1)] = [(i,j),]
-
-    if field.spaces[i][j-1].entity == 0:
-        adjacencyMap[(i,j)].append((i,j-1))
-    if field.spaces[i+1][j].entity == 0:
-        adjacencyMap[(i,j)].append((i+1,j))
-    if field.spaces[i-1][j].entity == 0:
-        adjacencyMap[(i,j)].append((i-1,j))
-    if field.spaces[i][j+1].entity == 0:
-        adjacencyMap[(i,j)].append((i,j+1))
-
-    if (field.spaces[i+1][j].entity == 1 or field.spaces[i-1][j].entity == 1
-        or field.spaces[i][j+1].entity == 1 or field.spaces[i][j-1].entity == 1):
-        elfDestinations.append((i,j))
-
-    if (field.spaces[i+1][j].entity == 2 or field.spaces[i-1][j].entity == 2
-        or field.spaces[i][j+1].entity == 2 or field.spaces[i][j-1].entity == 2):
-        goblinDestinations.append((i,j))
-
-
-def updateAdj(moveFrom, moveTo, entity):
-    return
-    fromX = moveFrom[0]
-    fromY = moveFrom[1]
-    toX = moveTo[0]
-    toY = moveTo[1]
-
-    field.spaces[fromX][fromY].entity = 0
-    field.spaces[toX][toY].entity = entity
-
-    #Add the FROM coordinates to the adjacency map
-    adjacencyMap[(fromX, fromY)] = []
-    if field.spaces[fromX][fromY-1].entity == 0:
-        adjacencyMap[(fromX,fromY)].append((fromX,fromY-1))
-    if field.spaces[fromX+1][fromY].entity == 0:
-        adjacencyMap[(fromX,fromY)].append((fromX + 1,fromY))
-    if field.spaces[fromX-1][fromY].entity == 0:
-        adjacencyMap[(fromX,fromY)].append((fromX-1,fromY))
-    if field.spaces[fromX][fromY+1].entity == 0:
-        adjacencyMap[(fromX,fromY)].append((fromX,fromY+1))
-
-    #Add the FROM coordinates to the neighbours of the FROM, will possibly be added to the TO-entry but this entry will be removed anyway in the next step
-    if (fromX-1, fromY) in adjacencyMap:
-        adjacencyMap[(fromX-1, fromY)].append((fromX, fromY))
-    elif field.spaces[fromX-1][fromY].entity == 0:
-        adjacencyMap[(fromX-1, fromY)] = [(fromX, fromY),]
-
-    if (fromX+1, fromY) in adjacencyMap:
-        adjacencyMap[(fromX+1, fromY)].append((fromX, fromY))
-    elif field.spaces[fromX+1][fromY].entity == 0:
-        adjacencyMap[(fromX+1, fromY)] = [(fromX, fromY),]
-
-    if (fromX, fromY-1) in adjacencyMap:
-        adjacencyMap[(fromX, fromY-1)].append((fromX, fromY))
-    elif field.spaces[fromX][fromY-1].entity == 0:
-        adjacencyMap[(fromX, fromY-1)] = [(fromX, fromY),]
-
-    if (fromX, fromY+1) in adjacencyMap:
-        adjacencyMap[(fromX, fromY+1)].append((fromX, fromY))
-    elif field.spaces[fromX][fromY+1].entity == 0:
-        adjacencyMap[(fromX, fromY+1)] = [(fromX, fromY),]
-
-    #remove the TO coordinates from the adjacency map
-    if (toX, toY) in adjacencyMap:
-        adjacencyMap.pop((toX, toY))
-
-    #remove the TO coordinates from all the neighbours that contain them
-    if (toX+1, toY) in adjacencyMap:
-        if (toX, toY) in adjacencyMap[(toX+1, toY)]:
-            adjacencyMap[(toX+1, toY)].remove((toX, toY))
-
-    if (toX-1, toY) in adjacencyMap:
-        if (toX, toY) in adjacencyMap[(toX-1, toY)]:
-            adjacencyMap[(toX-1, toY)].remove((toX, toY))
-
-    if (toX, toY+1) in adjacencyMap:
-        if (toX, toY) in adjacencyMap[(toX, toY+1)]:
-            adjacencyMap[(toX, toY+1)].remove((toX, toY))
-
-    if (toX, toY-1) in adjacencyMap:
-        if (toX, toY) in adjacencyMap[(toX, toY-1)]:
-            adjacencyMap[(toX, toY-1)].remove((toX, toY))
-
-    #change the destinations
-    destinations = goblinDestinations
-    if entity == 1:
-        destinations = elfDestinations
-
-    if (fromX+1, fromY) in destinations:
-        destinations.remove((fromX+1, fromY))
-    if (fromX-1, fromY) in destinations:
-        destinations.remove((fromX-1, fromY))
-    if (fromX, fromY+1) in destinations:
-        destinations.remove((fromX, fromY+1))
-    if (fromX, fromY-1) in destinations:
-        destinations.remove((fromX, fromY-1))
-
-    if field.spaces[toX+1][toY].entity == 0:
-        destinations.append((toX+1,toY))
-    if field.spaces[toX-1][toY].entity == 0:
-        destinations.append((toX-1,toY))
-    if field.spaces[toX][toY+1].entity == 0:
-        destinations.append((toX,toY+1))
-    if field.spaces[toX][toY-1].entity == 0:
-        destinations.append((toX,toY-1))
-
-"""
-
-
 counter = 0
 while allDead == False:
     
-       
+     
     for i in range(0,field.xSize):
         output = ""
         for j in range(0,field.ySize):
@@ -306,6 +165,7 @@ while allDead == False:
                 output+='E'
         print(output)
     print('\n')
+    
     
     if (counter > 90):
         breakpoint = 1
@@ -323,23 +183,6 @@ while allDead == False:
 
         f = fighters[j]
 
-        """
-        for i in range(0,field.xSize):
-            output = ""
-            for j in range(0,field.ySize):
-                sp = field.spaces[j][i]
-                if sp.entity == -1:
-                    output+='#'
-                elif sp.entity == 0:
-                    output+='.'
-                elif sp.entity == 1:
-                    output+='G'
-                elif sp.entity == 2:
-                    output+='E'
-            print(output)
-        print('\n')
-        """
-
         if f.entity == 2:
             breakpoints = 2
         if f.hp > 0:
@@ -351,22 +194,22 @@ while allDead == False:
                     xPos = g.xPos
                     yPos = g.yPos
                     if g.entity == 2:
-                        if field.spaces[xPos+1][yPos].entity == 0:
+                        if field.spaces[xPos+1][yPos].entity == 0 and (((xPos+1, yPos) in goblinDestinations) == False):
                             goblinDestinations.append((xPos+1, yPos))
-                        if field.spaces[xPos-1][yPos].entity == 0:
+                        if field.spaces[xPos-1][yPos].entity == 0 and (((xPos-1, yPos) in goblinDestinations) == False):
                             goblinDestinations.append((xPos-1, yPos))
-                        if field.spaces[xPos][yPos+1].entity == 0:
+                        if field.spaces[xPos][yPos+1].entity == 0 and (((xPos, yPos+1) in goblinDestinations) == False):
                             goblinDestinations.append((xPos, yPos+1))
-                        if field.spaces[xPos][yPos-1].entity == 0:
+                        if field.spaces[xPos][yPos-1].entity == 0 and (((xPos, yPos-1) in goblinDestinations) == False):
                             goblinDestinations.append((xPos, yPos-1))
                     elif g.entity == 1:
-                        if field.spaces[xPos+1][yPos].entity == 0:
+                        if field.spaces[xPos+1][yPos].entity == 0 and (((xPos+1, yPos) in elfDestinations) == False):
                             elfDestinations.append((xPos+1, yPos))
-                        if field.spaces[xPos-1][yPos].entity == 0:
+                        if field.spaces[xPos-1][yPos].entity == 0 and (((xPos-1, yPos) in elfDestinations) == False):
                             elfDestinations.append((xPos-1, yPos))
-                        if field.spaces[xPos][yPos+1].entity == 0:
+                        if field.spaces[xPos][yPos+1].entity == 0 and (((xPos, yPos+1) in elfDestinations) == False):
                             elfDestinations.append((xPos, yPos+1))
-                        if field.spaces[xPos][yPos-1].entity == 0:
+                        if field.spaces[xPos][yPos-1].entity == 0 and (((xPos, yPos-1) in elfDestinations) == False):
                             elfDestinations.append((xPos, yPos-1)) 
 
             adjacencyMap = {(0,0):[(0,0),],}
@@ -386,6 +229,8 @@ while allDead == False:
                             adjacencyMap[(i,j)].append((i-1,j))
                         if field.spaces[i][j+1].entity == 0:
                             adjacencyMap[(i,j)].append((i,j+1))
+                        #if (len(adjacencyMap[(i,j)]) == 0):
+                        #    adjacencyMap.pop((i,j))
 
             adjacencyMap.pop((0,0))
             if f.entity == 2:
@@ -529,16 +374,19 @@ while allDead == False:
     goblins = 0
     totalhp = 0
     fighters = sorted(fighters)
+
+    
     for f in fighters:
-        print("Fighter at: " + str(f.xPos) + ", " + str(f.yPos))
+        #print("Fighter at: " + str(f.xPos) + ", " + str(f.yPos))
         if f.entity==1 and f.hp>0:
-            print("goblin hp: " + str(f.hp))
+            #print("goblin hp: " + str(f.hp))
             totalhp+=f.hp
             goblins+=1
         elif f.entity==2 and f.hp>0:
-            print("elf hp: " + str(f.hp))
+            #print("elf hp: " + str(f.hp))
             totalhp+=f.hp
             elves+=1
+    
     if elves == 0 or goblins == 0:
         print("nr of rounds: " + str(counter))
         print("elves remaining: " + str(elves))
